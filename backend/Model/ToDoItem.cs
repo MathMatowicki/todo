@@ -1,5 +1,9 @@
 namespace Model
 {
+
+    /// <summary>
+    /// Represents a to-do item.
+    /// </summary>
     public class ToDoItem
     {
         public int Id { get; set; }

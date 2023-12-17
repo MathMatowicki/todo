@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using Model;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,13 +48,6 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.Run();
-
-public class ToDoItem
-{
-    public int Id { get; set; }
-    public string Title { get; set; }
-    public bool IsDone { get; set; }
-}
 
 public class ToDoDbContext : DbContext
 {
