@@ -1,16 +1,13 @@
 using System.ComponentModel.DataAnnotations;
-using System.Xml;
-namespace Model
+namespace DTO
 {
 
     /// <summary>
     /// Represents a to-do item.
     /// </summary>
-    public class ToDoItem
+    public class ToDoItemDTO
     {
-        [Required]
-        public Guid Id { get; set; }
-        public string Title { get; set; }
+        public string? Title { get; set; }
         public bool IsDone { get; set; }
     }
 }

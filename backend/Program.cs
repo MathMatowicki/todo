@@ -1,6 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using Model;
-
+using DTO;
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddEndpointsApiExplorer();
@@ -11,31 +11,34 @@ var todos = new List<ToDoItem>();
 
 app.MapGet("/todos", () => todos);
 
-app.MapPost("/todos", (ToDoItem todo) =>
+app.MapPost("/todos", (ToDoItemDTO todo) =>
 {
-    todos.Add(todo);
+    var todoItem = new ToDoItem
+    {
+        Id = Guid.NewGuid(),
+        Title = todo.Title,
+        IsDone = todo.IsDone
+    };
+    todos.Add(todoItem);
     return todo;
 });
 
-app.MapPut("/todos/{id}", (int id, ToDoItem todo) =>
+app.MapPut("/todos/{id}", (Guid id, ToDoItemDTO todo) =>
 {
-    var index = todos.FindIndex(todo => todo.Id == id);
-    if (index == -1)
+    var item = todos.Find(todo => todo.Id == id);
+    if (item == null)
         return Results.NotFound();
 
-    todos[index] = todo;
     return Results.NoContent();
 });
 
-app.MapDelete("/todos/{id}", (int id) =>
+app.MapDelete("/todos/{id}", (Guid id) =>
 {
-    var index = todos.FindIndex(todo => todo.Id == id);
-    if (index == -1)
-    {
+    var item = todos.Find(todo => todo.Id == id);
+    if (item == null)
         return Results.NotFound();
-    }
 
-    todos.RemoveAt(index);
+    todos.Remove(item);
     return Results.NoContent();
 });
 
