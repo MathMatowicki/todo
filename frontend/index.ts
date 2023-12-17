@@ -1,8 +1,19 @@
-const server = Bun.serve({
-  port: 5294,
+import ToDoItem from "./interfaces/ToDoItem";
+import { ToDoList } from "./interfaces/ToDoList";
+let url = "http://localhost:5294/";
+
+Bun.serve({
+  error(error: Error) {
+    return new Response(
+      `Something went wrong: ${(error.toString(), { status: 500 })}`
+    );
+  },
   fetch(req) {
-    return new Response("test");
+    if (!url) throw new Error("url is not defined");
+
+    const items: ToDoItem[] = [];
+    const html = items.map((item: any) => `<li>${item}</li>`).join("");
+
+    return new Response(`<ul>${html}</ul>`);
   },
 });
-
-console.log(`Listening on http://localhost:${server.port} ...`);
