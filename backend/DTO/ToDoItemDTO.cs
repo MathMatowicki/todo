@@ -7,7 +7,7 @@ namespace DTO
     /// </summary>
     public class ToDoItemDTO
     {
-        public string? Title { get; set; }
+        public string Title { get; set; }
         public bool IsDone { get; set; }
     }
 }
