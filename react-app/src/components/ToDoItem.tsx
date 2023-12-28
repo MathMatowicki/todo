@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import ToDoItem from "../interfaces/ToDoItem";
 
-function TodoList() {
+function ToDoItem() {
   const [todos, setTodos] = useState([]);
   const url = "http://localhost:5294/api/todos";
 
@@ -19,10 +20,10 @@ function TodoList() {
 
   return (
     <div>
-      <h1>Todo List</h1>
+      <h1>To Do List!</h1>
       <ul>
-        {todos.map((todo) => (
-          <li key={todo.id}>{todo.title}</li>
+        {todos.map((todo: ToDoItem) => (
+          <li key={todo.id}>{todo.name}</li>
         ))}
       </ul>
     </div>
