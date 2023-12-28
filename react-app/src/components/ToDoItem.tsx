@@ -1,15 +1,20 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axios from "axios";
-import ToDoItem from "../interfaces/ToDoItem";
+import ToDoItemInterface from "../interfaces/ToDoItem";
 
 function ToDoItem() {
   const [todos, setTodos] = useState([]);
-  const url = "http://localhost:5294/api/todos";
+  const url = "http://localhost:5294/todos";
+
+  const headers = {
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "*", // Add CORS header
+  };
 
   useEffect(() => {
     // Replace with your actual API endpoint
     axios
-      .get(url)
+      .get(url, { headers })
       .then((response) => {
         setTodos(response.data);
       })
@@ -22,8 +27,8 @@ function ToDoItem() {
     <div>
       <h1>To Do List!</h1>
       <ul>
-        {todos.map((todo: ToDoItem) => (
-          <li key={todo.id}>{todo.name}</li>
+        {todos.map((todo: ToDoItemInterface) => (
+          <li key={todo.id}>{todo.title}</li>
         ))}
       </ul>
     </div>

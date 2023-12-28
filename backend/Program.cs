@@ -3,12 +3,22 @@ using Model;
 using DTO;
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("CorsPolicy", policy =>
+    {
+        policy.AllowAnyOrigin()
+            .AllowAnyMethod()
+            .AllowAnyHeader();
+    });
+
+});
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<ToDoDbContext>(options => options.UseInMemoryDatabase($"ToDoDb"));
 var app = builder.Build();
+app.UseCors("CorsPolicy");
 var todos = new List<ToDoItem>();
-
 app.MapGet("/todos", () => todos);
 
 app.MapPost("/todos", (ToDoItemDTO todo) =>
